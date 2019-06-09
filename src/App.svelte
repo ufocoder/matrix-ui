@@ -2,4 +2,8 @@
   import MatrixComponent from './components/Matrix.svelte'
 </script>
 
-<MatrixComponent controls={true} />
+<h2>Editable matrix</h2>
+<MatrixComponent editable={true} />
+
+<h2>Non-editable matrix</h2>
+<MatrixComponent />

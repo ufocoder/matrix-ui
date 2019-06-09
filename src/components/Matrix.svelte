@@ -1,8 +1,7 @@
 <script>
-  import { beforeUpdate, afterUpdate } from 'svelte';
   import Matrix from '../lib/matrix'
 
-  export let controls = false;
+  export let editable = false;
   export let data = [
     [1,1],
     [1,1]
@@ -13,7 +12,7 @@
   $: matrixWidth = matrix.width
   $: matrixHeight = matrix.height
   $: matrixFirstRow = matrix.getRow(0)
-  $: matrixRows = matrix.getRows(controls ? 1 : 0)
+  $: matrixRows = matrix.getRows(editable ? 1 : 0)
   
   const handleAddRowAboveClick = () => matrix = matrix.addRowAbove()
   const handleAddRowBelowClick = () => matrix = matrix.addRowBelow()
@@ -55,7 +54,7 @@
 <div class="matrix">
   {matrixWidth} / {matrixHeight}
 	<table class="matrix-table table">
-		{#if controls}
+		{#if editable}
 			<tr>
 				<td></td>
 				<td 
@@ -68,9 +67,9 @@
 			</tr>
       <tr>
           <td rowspan={matrixHeight} on:click={handleAddColumnLeftClick}>add col</td>
-          {#each matrixFirstRow as col}
+          {#each matrixFirstRow as value}
             <td class="matrix-cell">
-              <input class="matrix-cell__input" type="number" bind:value={col} />
+              <input class="matrix-cell__input" type="number" bind:value={value} />
             </td>
           {/each}
           <td rowspan={matrixHeight} on:click={handleAddColumnRightClick}>add col</td>
@@ -78,14 +77,18 @@
 		{/if}
 		{#each matrixRows as row}
 			<tr>
-					{#each row as col}
+					{#each row as value}
 						<td class="matrix-cell">
-							<input class="matrix-cell__input" type="number" bind:value={col} />
+              {#if editable}
+                <input class="matrix-cell__input" type="number" bind:value={value} />
+              {:else}
+                {value}
+              {/if}
 						</td>
 					{/each}
 			</tr>
 		{/each}
-		{#if controls}
+		{#if editable}
 		<tr>
 			<td></td>
 			<td 
