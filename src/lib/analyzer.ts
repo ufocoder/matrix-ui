@@ -1,4 +1,4 @@
-import Matrix from './matrix'
+import Matrix from 'src/lib/matrix'
 
 const identity = value => value
 const compose = (...fns) => fns.reduceRight((prevFn, nextFn) =>
@@ -6,8 +6,8 @@ const compose = (...fns) => fns.reduceRight((prevFn, nextFn) =>
 );
 
 const walkOnCells = callback => (matrix: Matrix) => {
-  for (let x=0; x < matrix.rows; x++) {
-    for (let y=0; y < matrix.cols; y++) {
+  for (let x=0; x < matrix.width; x++) {
+    for (let y=0; y < matrix.height; y++) {
       if (!callback(matrix.getCell(x,y), x, y)){
         return false;
       }
@@ -22,7 +22,7 @@ export const isCellZero = (cell: number) : Boolean => cell === 0
 export const isCellIdentity = (cell: number, x: number, y: number) : Boolean => x === y ? cell === 1 : cell === 0
 export const isCellDiagonal = (cell: number, x: number, y: number) : Boolean => x === y ? cell !== 0 : cell === 0
 
-export const isSquare = (matrix) => matrix.cols !== matrix.rows
+export const isSquare = (matrix) => matrix.cols !== matrix.height
 
 export const isLogical = walkOnCells(isCellLogical)
 export const isNonnegative = walkOnCells(isCellNonnegative)

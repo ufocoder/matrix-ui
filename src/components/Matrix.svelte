@@ -1,5 +1,5 @@
 <script>
-  import Matrix from '../lib/matrix'
+  import Matrix from 'src/lib/matrix'
 
   export let editable = false;
   export let data = [
