@@ -1,3 +1,5 @@
+import path from 'path';
+import alias from 'rollup-plugin-alias';
 import svelte from 'rollup-plugin-svelte';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
@@ -16,6 +18,10 @@ export default {
 		file: 'public/bundle.js'
 	},
 	plugins: [
+    alias({
+      resolve: ['.js', '.ts', '.svelte'],
+      src: path.resolve(__dirname, 'src')
+    }),
     typescript(),
 		svelte({
 			dev: !production,

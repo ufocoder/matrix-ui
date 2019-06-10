@@ -1,5 +1,5 @@
 <script>
-  import MatrixComponent from './components/Matrix.svelte'
+  import MatrixComponent from 'src/components/Matrix'
 </script>
 
 <h2>Editable matrix</h2>
