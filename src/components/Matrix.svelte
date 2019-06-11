@@ -1,13 +1,13 @@
 <script>
   import Matrix from 'src/lib/matrix'
 
-  export let editable = false;
+  export let editable = false
   export let data = [
-    [1,1],
-    [1,1]
-  ];
+      [1,1],
+      [1,1]
+  ]
 
-  let matrix = new Matrix(data);
+  let matrix = new Matrix(data)
   
   $: matrixWidth = matrix.width
   $: matrixHeight = matrix.height

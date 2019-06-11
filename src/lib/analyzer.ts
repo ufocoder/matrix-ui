@@ -16,14 +16,13 @@ const walkOnCells = callback => (matrix: Matrix) => {
   return true;
 }
 
-export const isCellLogical = (cell: number) : Boolean => cell === 0 || cell === 1
-export const isCellNonnegative = (cell: number) : Boolean => cell >= 0
-export const isCellZero = (cell: number) : Boolean => cell === 0
-export const isCellIdentity = (cell: number, x: number, y: number) : Boolean => x === y ? cell === 1 : cell === 0
-export const isCellDiagonal = (cell: number, x: number, y: number) : Boolean => x === y ? cell !== 0 : cell === 0
+const isCellLogical = (cell: number) : Boolean => cell === 0 || cell === 1
+const isCellNonnegative = (cell: number) : Boolean => cell >= 0
+const isCellZero = (cell: number) : Boolean => cell === 0
+const isCellIdentity = (cell: number, x: number, y: number) : Boolean => x === y ? cell === 1 : cell === 0
+const isCellDiagonal = (cell: number, x: number, y: number) : Boolean => x === y ? cell !== 0 : cell === 0
 
 export const isSquare = (matrix) => matrix.cols !== matrix.height
-
 export const isLogical = walkOnCells(isCellLogical)
 export const isNonnegative = walkOnCells(isCellNonnegative)
 export const isZero = walkOnCells(isCellZero)
