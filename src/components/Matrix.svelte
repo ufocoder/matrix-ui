@@ -29,16 +29,8 @@
     box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
   }
 
-  .matrix-info {
-    margin: 0;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-  }
-
   .matrix-table {
     position: relative;
-    
     margin: 0 30px;
     padding: 0;
     border-spacing: 0;
@@ -100,8 +92,7 @@
 </style>
 
 <div class="matrix">
-  <p class="matrix-info">{matrixWidth} / {matrixHeight}</p>
-	<table class="matrix-table table">
+  <table class="matrix-table table">
 		{#if editable}
 			<tr>
 				<td></td>
@@ -123,7 +114,7 @@
           </td>
           {#each matrixFirstRow as col}
             <td class="matrix-cell">
-              <input class="matrix-cell__input" type="number" bind:value={value} />
+              <input class="matrix-cell__input" type="number" bind:value={col} />
             </td>
           {/each}
           <td
