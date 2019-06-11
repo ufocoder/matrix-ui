@@ -24,36 +24,84 @@
 
 <style>
   .matrix {
-  }
-  .matrix-table {
-    padding: 10px;
+    display: inline-block;
     position: relative;
-    border-radius: 5px;
-    margin: 10px;
     background: #fff;
     box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
+  }
+
+  .matrix-info {
+    margin: 0;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .matrix-table {
+    position: relative;
+    
+    margin: 0 30px;
     padding: 0;
     border-spacing: 0;
     border-collapse: separate;
   }
+
+  .matrix-table tr {
+    display: flex;
+  }
+
   .matrix-cell {
     margin: 0;
   }
   .matrix-cell__input {
     margin: 0;
+    text-align: center;
+    border: none;
   }
   .matrix-cell__create-row {
     width: 100%;
-    background: #ccc;
+    margin: 0;
+    padding: 0;
+    background: #eee;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.5s;
   }
   .matrix-cell__create-column {
-    width: 100%;
-    background: #ccc;
+    position: absolute;
+    width: 30px;
+    top: 0;
+    bottom: 0;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .matrix-cell__create-column--left {
+    left: -30px;
+  }
+
+  .matrix-cell__create-column--right {
+    right: -30px;
+  }
+
+  .matrix:hover .matrix-cell__create-row,
+  .matrix:hover .matrix-cell__create-column {
+    opacity: 1;
   }
 </style>
 
 <div class="matrix">
-  {matrixWidth} / {matrixHeight}
+  <p class="matrix-info">{matrixWidth} / {matrixHeight}</p>
 	<table class="matrix-table table">
 		{#if controls}
 			<tr>
@@ -62,18 +110,30 @@
 						colspan="{matrixWidth}" 
 						class="matrix-cell__create-row" 
 						on:click={handleAddRowAboveClick}>
-					add row
+					+
 				</td>
 				<td></td>
 			</tr>
       <tr>
-          <td rowspan={matrixHeight} on:click={handleAddColumnLeftClick}>add col</td>
+          <td
+              rowspan={matrixHeight}
+              class="matrix-cell__create-column  matrix-cell__create-column--left"
+              on:click={handleAddColumnLeftClick}
+          >
+              +
+          </td>
           {#each matrixFirstRow as col}
             <td class="matrix-cell">
               <input class="matrix-cell__input" type="number" bind:value={col} />
             </td>
           {/each}
-          <td rowspan={matrixHeight} on:click={handleAddColumnRightClick}>add col</td>
+          <td
+              rowspan={matrixHeight}
+              class="matrix-cell__create-column  matrix-cell__create-column--right"
+              on:click={handleAddColumnRightClick}
+          >
+              +
+          </td>
       </tr>
 		{/if}
 		{#each matrixRows as row}
@@ -88,12 +148,12 @@
 		{#if controls}
 		<tr>
 			<td></td>
-			<td 
-					colspan="{matrixWidth}" 
-					class="matrix-cell__create-row" 
-					on:click={handleAddRowBelowClick}>
+			<td
+					colspan="{matrixWidth}"
+					class="matrix-cell__create-row"
+					on:click={handleAddRowBelowClick}
       >
-				add row
+				+
 			</td>
 			<td></td>
 		</tr>
