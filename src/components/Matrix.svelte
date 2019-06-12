@@ -1,32 +1,33 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import Matrix from 'src/lib/matrix'
 
   export let editable = false
-  export let data = [
-      [1,1],
-      [1,1]
-  ]
+  export let fixed = false
+  export let data = [[]]
 
-  let matrix = new Matrix(data)
+  const dispatch = createEventDispatcher()
   
-  $: matrixWidth = matrix.width
-  $: matrixHeight = matrix.height
-  $: matrixFirstRow = matrix.getRow(0)
-  $: matrixRows = matrix.getRows(editable ? 1 : 0)
-  
-  const handleAddRowAboveClick = () => matrix = matrix.addRowAbove()
-  const handleAddRowBelowClick = () => matrix = matrix.addRowBelow()
-  const handleAddColumnLeftClick = () => matrix = matrix.addColumnLeft()
-  const handleAddColumnRightClick = () => matrix = matrix.addColumnRight()
+  const createClickHandler = (modifyMatrix) => () => {
+    matrix = modifyMatrix()
+    data = matrix.getData()
+    dispatch('change', { data})
+  }
 
+  let matrix
+  let rows
+
+  $: {
+    matrix = new Matrix(data)
+    rows = matrix.getRows(editable ? 1 : 0)
+  }
 </script>
 
 <style>
   .matrix {
+    border-radius: 1px;
     display: inline-block;
     position: relative;
-    background: #fff;
-    box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
   }
 
   .matrix-table {
@@ -35,13 +36,20 @@
     padding: 0;
     border-spacing: 0;
     border-collapse: separate;
+    background: #fff;
+    box-shadow: 0 10px 29px 0 rgba(68, 88, 144, 0.1);
   }
 
   .matrix-table tr {
     display: flex;
   }
 
+  .matrix-table tr:hover {
+    background: #f0f0f0;
+  }
+
   .matrix-cell {
+    padding: 20px;
     margin: 0;
   }
   .matrix-cell__input {
@@ -97,36 +105,36 @@
 			<tr>
 				<td></td>
 				<td 
-						colspan="{matrixWidth}" 
+						colspan="{matrix.width}" 
 						class="matrix-cell__create-row" 
-						on:click={handleAddRowAboveClick}>
+						on:click={createClickHandler(matrix.addRowAbove)}>
 					+
 				</td>
 				<td></td>
 			</tr>
       <tr>
           <td
-              rowspan={matrixHeight}
+              rowspan={matrix.height}
               class="matrix-cell__create-column  matrix-cell__create-column--left"
-              on:click={handleAddColumnLeftClick}
+              on:click={createClickHandler(matrix.addColumnLeft)}
           >
               +
           </td>
-          {#each matrixFirstRow as col}
+          {#each matrix.getRow(0) as value}
             <td class="matrix-cell">
-              <input class="matrix-cell__input" type="number" bind:value={col} />
+              <input type="text" class="matrix-cell__input" bind:value={value} />
             </td>
           {/each}
           <td
-              rowspan={matrixHeight}
+              rowspan={matrix.height}
               class="matrix-cell__create-column  matrix-cell__create-column--right"
-              on:click={handleAddColumnRightClick}
+              on:click={createClickHandler(matrix.addColumnRight)}
           >
               +
           </td>
       </tr>
 		{/if}
-		{#each matrixRows as row}
+		{#each rows as row}
 			<tr>
 					{#each row as value}
 						<td class="matrix-cell">
@@ -143,9 +151,9 @@
 		<tr>
 			<td></td>
 			<td
-					colspan="{matrixWidth}"
+					colspan="{matrix.width}"
 					class="matrix-cell__create-row"
-					on:click={handleAddRowBelowClick}
+					on:click={createClickHandler(matrix.addRowBelow)}
       >
 				+
 			</td>
