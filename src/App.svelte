@@ -1,9 +1,31 @@
 <script>
-  import MatrixComponent from 'src/components/Matrix'
+  import Router, { link } from 'svelte-spa-router'
+  import Home from './routes/Home.svelte'
+  import Details from './routes/Details.svelte'
+  import Multiply from './routes/Multiply.svelte'
+  import NotFound from './routes/NotFound.svelte'
+
+  const routes = {
+    '/': Home,
+    '/details': Details,
+    '/multiply': Multiply,
+    '*': NotFound,
+  }
 </script>
 
-<h2>Editable matrix</h2>
-<MatrixComponent editable={true} />
+<style>
+  .menu {
+    display: block;
+  }
+  .menu-link {
+    display: block;
+  }
+</style>
 
-<h2>Non-editable matrix</h2>
-<MatrixComponent />
+<nav class="menu">
+  <a class="menu-link" use:link href="/">Home</a>
+  <a class="menu-link" use:link href="/details">Matrix: details</a>
+  <a class="menu-link" use:link href="/multiply">Matrix: multiply</a>
+</nav>
+
+<Router {routes}/>

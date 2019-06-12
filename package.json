@@ -37,7 +37,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "spectre.css": "^0.5.8"
+    "svelte-spa-router": "^1.1.1"
   },
   "jest": {
     "verbose": true,
