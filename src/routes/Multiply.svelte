@@ -12,8 +12,8 @@
     result = Matrix.from(data).multiply(number).getData()
   }
 
-  const onMatrixChange = (e) => data = e.detail.data
-  const onNumberChange = (e) => number = e.detail.number
+  const onMatrixChange = e => data = e.detail.data
+  const onNumberChange = e => number = e.detail.number
 </script>
 
 <style>

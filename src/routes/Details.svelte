@@ -1,14 +1,10 @@
 <script>
   import Matrix from 'src/lib/matrix'
   import MatrixComponent from 'src/components/Matrix'
-  import { isSquare, isZero, isIdentity } from 'src/lib/analyzer'
+  import { classifiers } from 'src/lib/analyzer'
 
   let data = [[1]]
   let matrix = new Matrix(data)
-
-  console.log(isIdentity(matrix))
-  console.log(isSquare(matrix))
-  console.log(matrix.getData(), matrix.width, matrix.height)
 </script>
 
 <h2>Matrix</h2>
@@ -17,13 +13,9 @@
 
 <h3>Details</h3>
 <div>
-  {#if isSquare(matrix)}
-    Квадратная
-  {/if}
-  {#if isZero(matrix)}
-    Нулевая
-  {/if}
-  {#if isIdentity(matrix)}
-    Единичная
-  {/if}
+  {#each classifiers as classifier}
+    {#if classifier.analyzer(matrix)}
+      <span class="chip">{classifier.key}</span>
+    {/if}
+  {/each}
 </div>
