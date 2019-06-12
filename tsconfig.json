@@ -9,7 +9,7 @@
     "sourceMap": true,
     "noEmitHelpers": false,
     "strictNullChecks": false,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
       "src/*": ["./src/*"],
     },
@@ -21,6 +21,7 @@
       "./node_modules/@types"
     ],
     "types": [
+      "jest",
       "node"
     ]
   },
@@ -31,10 +32,6 @@
   "include": [
     "src/**/*.ts"
   ],
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true
-  },
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
