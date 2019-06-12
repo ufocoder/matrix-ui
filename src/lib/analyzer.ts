@@ -25,7 +25,7 @@ const isCellZero: CellAnalyzer = cell => cell === 0
 const isCellIdentity: CellAnalyzer = (cell, x, y) => x === y ? cell === 1 : cell === 0
 const isCellDiagonal: CellAnalyzer = (cell, x, y) => x === y ? cell !== 0 : cell === 0
 
-export const isSquare: MatrixAnalyzer = matrix => matrix.cols !== matrix.height
+export const isSquare: MatrixAnalyzer = matrix => matrix.width !== matrix.height
 export const isLogical: MatrixAnalyzer = walkOnCells(isCellLogical)
 export const isNonnegative: MatrixAnalyzer = walkOnCells(isCellNonnegative)
 export const isZero: MatrixAnalyzer = walkOnCells(isCellZero)
