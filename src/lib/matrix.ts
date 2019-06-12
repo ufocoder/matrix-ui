@@ -10,7 +10,7 @@ export default class Matrix {
 
     protected items: Items;
 
-    constructor (items: Items = []) {
+    public constructor (items: Items = []) {
         if (!this.checkItems(items)) {
             throw new TypeError('Incorrect matrix data')
         }
@@ -20,11 +20,11 @@ export default class Matrix {
         this.width = items.length ? items[0].length : 0;
     }
 
-    protected cloneItems(items): Items {
+    protected cloneItems(items: Items): Items {
         return items.map(row => row.slice()).slice()
     }
 
-    protected checkItems(items: any): boolean {
+    protected checkItems(items: Items): boolean {
         if (!Array.isArray(items)) {
             return false
         }
@@ -42,17 +42,37 @@ export default class Matrix {
         return true;
     }
     
-    static create(width: number, height: number, initial): Matrix {
-        const items = Array.from(
-            new Array(width)).map(() => (
-            Array.from(new Array(height)).map(() => initial)
-        )
-        )
-
-        return new Matrix(items);
+    public static create(width: number, height: number, initial: number | Function = 0): Matrix {
+      return new Matrix(Array.from(
+        (new Array(height)).map((_, i) => (
+          Array.from(new Array(width)).map((__, j) => (
+            typeof initial === "function" ? initial(i, j) : initial
+          ))
+        ))
+      ));
     }
 
-    static from(items: Items): Matrix {
+    public static isEqual(firstMatrix: Matrix, secondMatrix: Matrix): boolean {
+      if (firstMatrix.height !== secondMatrix.height) {
+        return false
+      }
+
+      if (firstMatrix.width !== secondMatrix.width) {
+        return false
+      }
+
+      for (let i = 0; i < firstMatrix.width; i++) {
+        for (let j = 0; j < firstMatrix.height; j++) {
+          if (firstMatrix.getCell(i, j) !== secondMatrix.getCell(i, j)) {
+            return false;
+          }
+        }
+      }
+
+      return true;
+    }
+
+    public static from(items: Items): Matrix {
         return new Matrix(items);
     }
 
@@ -77,8 +97,13 @@ export default class Matrix {
     }
 
     @autobind
-    public getCell(x, y): number {
+    public getCell(x: number, y: number): number {
         return this.items[x][y];
+    }
+
+    @autobind
+    public getData(): Items {
+        return this.cloneItems(this.items);
     }
 
     @autobind
@@ -97,12 +122,15 @@ export default class Matrix {
         return Matrix.from(this.items);
     }
 
+    @autobind
     public addColumnLeft(withInitial = 0): Matrix {
         this.items.forEach(row => row.unshift(withInitial));
         this.width++;
 
         return Matrix.from(this.items);
     }
+
+    @autobind
     public addColumnRight(withInitial = 0): Matrix {
         this.items.forEach(row => row.push(withInitial));
         this.width++;
@@ -123,7 +151,7 @@ export default class Matrix {
 
     @autobind
     public checkMultiplyByMatrix(matrix: Matrix): boolean {
-        return this.height === matrix.width
+        return this.width === matrix.height
     }
 
     @autobind
@@ -132,6 +160,17 @@ export default class Matrix {
             throw new TypeError("Incorrect multiplier")
         }
         
+        const newMatrix = Matrix.create(matrix.width, this.height);
+
+        for (let i = 0; i < matrix.width; i++) {
+            for (let j = 0; j < this.height; i++) {
+                let value = 0
+                for (let r = 0; this.width < r; r++) {
+                    value += matrix.getCell(i, r) + this.getCell(r, j)
+                }
+                newMatrix[j][i] = value
+            }
+        }
         
         return Matrix.from(this.items)
     }
