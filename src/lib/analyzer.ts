@@ -31,3 +31,12 @@ export const isNonnegative: MatrixAnalyzer = walkOnCells(isCellNonnegative)
 export const isZero: MatrixAnalyzer = walkOnCells(isCellZero)
 export const isIdentity: MatrixAnalyzer = compose(isSquare, walkOnCells(isCellIdentity))
 export const isDiagonal: MatrixAnalyzer = compose(isSquare, walkOnCells(isCellDiagonal))
+
+export const classifiers = [
+  { key: 'square', analyzer: isSquare },
+  { key: 'logical', analyzer: isLogical },
+  { key: 'nonnegative', analyzer: isNonnegative },
+  { key: 'zero', analyzer: isZero },
+  { key: 'identity', analyzer: isIdentity },
+  { key: 'diagonal', analyzer: isDiagonal }
+]
