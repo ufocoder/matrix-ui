@@ -1,10 +1,18 @@
 <script>
   import Matrix from 'src/lib/matrix'
   import MatrixComponent from 'src/components/Matrix'
-  import { classifiers } from 'src/lib/analyzer'
+  import { analyzers } from 'src/lib/analyzer'
 
-  let data = [[1]]
+  let data = [[1,2,3], [4,5,6], [7,8,9]]
   let matrix = new Matrix(data)
+  let classifiers = analyzers.filter(({ analyzer }) => analyzer(matrix)).map(({ key }) => key)
+
+  console.log(classifiers)
+
+  $: {
+    classifiers = analyzers.filter(({ analyzer }) => analyzer(matrix)).map(({ key }) => key)
+    console.log(classifiers)
+  }
 </script>
 
 <h2>Matrix</h2>
@@ -14,8 +22,6 @@
 <h3>Details</h3>
 <div>
   {#each classifiers as classifier}
-    {#if classifier.analyzer(matrix)}
-      <span class="chip">{classifier.key}</span>
-    {/if}
+    <span class="chip">{classifier}</span>
   {/each}
 </div>

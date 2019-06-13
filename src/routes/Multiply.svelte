@@ -4,7 +4,7 @@
   import NumberComponent from 'src/components/Number'
   import OperatorComponent from 'src/components/Operator'
 
-  let data = [[1]]
+  let data = [[1,2,3], [4,5,6], [7,8,9]]
   let number = 5
   let result
 
@@ -20,12 +20,14 @@
 .expression {
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 .expression-operator {
+  flex: 1;
   margin: 0 20px;
 }
 .expression-operand {
-  
+  flex: 1;
 }
 </style>
 
