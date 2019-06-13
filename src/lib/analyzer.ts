@@ -11,7 +11,7 @@ const compose = (...fns: MatrixAnalyzer[]): MatrixAnalyzer => fns.reduceRight((p
 const walkOnCells = (callback: Function): MatrixAnalyzer => (matrix: Matrix): boolean => {
     for (let x=0; x < matrix.width; x++) {
         for (let y=0; y < matrix.height; y++) {
-            if (!callback(matrix.getCell(x,y), x, y)){
+            if (!callback(matrix.getCell(x,y), x, y)) {
                 return false;
             }
         }
@@ -32,7 +32,7 @@ export const isZero: MatrixAnalyzer = walkOnCells(isCellZero)
 export const isIdentity: MatrixAnalyzer = compose(isSquare, walkOnCells(isCellIdentity))
 export const isDiagonal: MatrixAnalyzer = compose(isSquare, walkOnCells(isCellDiagonal))
 
-export const classifiers = [
+export const analyzers = [
   { key: 'square', analyzer: isSquare },
   { key: 'logical', analyzer: isLogical },
   { key: 'nonnegative', analyzer: isNonnegative },
