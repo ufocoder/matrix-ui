@@ -14,14 +14,15 @@
   .number {
     border-radius: 1px;
     display: block;
-    padding: 10px;
-    background: #fff;
+    background: #eee;
     margin: 10px 0;
+    
   }
   .number-input {
     background: none;
     text-align: center;
     border: 0;
+    padding: 10px;
   }
 </style>
 
