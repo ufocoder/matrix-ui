@@ -4,7 +4,7 @@
   import NumberComponent from 'src/components/Number'
   import OperatorComponent from 'src/components/Operator'
 
-  let matrixA = Generators.incremental(3)
+  let matrixA = Generators.incremental(3, 3)
   let multiplier = 5
 
   $: matrixB = matrixA.multiply(multiplier)
