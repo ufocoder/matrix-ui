@@ -1,13 +1,8 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import Input from 'src/components/Input'
 
   export let number = 1;
   export let editable = false;
-
-  const dispatch = createEventDispatcher()
-  $: {
-    dispatch('change', { number })
-  }
 </script>
 
 <style>
@@ -16,19 +11,12 @@
     display: block;
     background: #eee;
     margin: 10px 0;
-    
-  }
-  .number-input {
-    background: none;
-    text-align: center;
-    border: 0;
-    padding: 10px;
   }
 </style>
 
 <div class="number">
   {#if editable}
-    <input type="text" class="number-input" bind:value={number} />
+    <Input bind:value={number} />
   {:else}
     {number}
   {/if}

@@ -32,7 +32,7 @@
 <div>
   {#each generators as generator}
     <span class="chip" on:click={handleGeneratorClick(generator)}>
-      {generator
-    }</span>
+      {generator}
+    </span>
   {/each}
 </div>
