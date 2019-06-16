@@ -198,23 +198,23 @@ export default class Matrix {
 
     @autobind
     public canAddToMatrix(matrix: Matrix): boolean {
-        return this.width === matrix.width && this.height === matrix.height
+      return this.width === matrix.width && this.height === matrix.height
     }
 
     @autobind
     public add(matrix: Matrix): Matrix {
-        if (!this.canAddToMatrix(matrix)) {
-            throw new TypeError("Incorrect addend")
-        }
+      if (!this.canAddToMatrix(matrix)) {
+        throw new TypeError("Incorrect addend")
+      }
         
-        const newMatrix = Matrix.create(this.width, this.height);
+      const newMatrix = Matrix.create(this.width, this.height);
 
-        for (let i = 0; i < this.height; i++) {
-            for (let j = 0; j < this.width; j++) {
-                newMatrix.items[i][j] = matrix.getCell(i, j) + this.getCell(i, j)
-            }
+      for (let i = 0; i < this.height; i++) {
+        for (let j = 0; j < this.width; j++) {
+          newMatrix.items[i][j] = matrix.getCell(i, j) + this.getCell(i, j)
         }
+      }
         
-        return newMatrix
+      return newMatrix
     }
 }
