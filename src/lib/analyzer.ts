@@ -25,6 +25,10 @@ const isCellIdentity: CellAnalyzer = (cell, x, y) => x === y ? cell === 1 : cell
 const isCellDiagonal: CellAnalyzer = (cell, x, y) => x === y ? cell !== 0 : cell === 0
 
 export const isSquare: MatrixAnalyzer = matrix => matrix.width === matrix.height
+export const isRectangular: MatrixAnalyzer = matrix => !isSquare(matrix)
+export const isLineVector: MatrixAnalyzer = matrix => matrix.height === 1 && matrix.width > 1
+export const isColumnVector: MatrixAnalyzer = matrix => matrix.width === 1 && matrix.height > 1
+export const isScalar: MatrixAnalyzer = matrix => matrix.height === 1 && matrix.width === 1
 export const isLogical: MatrixAnalyzer = walkOnCells(isCellLogical)
 export const isNonnegative: MatrixAnalyzer = walkOnCells(isCellNonnegative)
 export const isZero: MatrixAnalyzer = walkOnCells(isCellZero)
@@ -33,9 +37,13 @@ export const isDiagonal: MatrixAnalyzer = and(isSquare, walkOnCells(isCellDiagon
 
 export default {
     isSquare,
+    isRectangular,
+    isLineVector,
+    isColumnVector,
+    isScalar,
+    isZero,
     isLogical,
     isNonnegative,
-    isZero,
-    isIdentity,
-    isDiagonal
+    isDiagonal,
+    isIdentity
 }
