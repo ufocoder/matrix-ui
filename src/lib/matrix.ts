@@ -168,7 +168,7 @@ export default class Matrix {
         for (let j = 0; j < this.height; j++) {
           let value = 0
           for (let r = 0; r < this.width; r++) {
-            value += matrix.getCell(i, r) * this.getCell(r, j)
+            value += matrix.getCell(r, i) * this.getCell(j, r)
           }
           newMatrix.items[j][i] = value
         }
