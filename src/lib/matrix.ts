@@ -1,9 +1,9 @@
 import autobind from 'autobind'
 
-type Items = number[][];
-type Rows =  number[][];
-type Row = number[];
-type Initiator = (x?: number, y?: number, matrix?: Matrix) => number
+export type Items = number[][];
+export type Rows =  number[][];
+export type Row = number[];
+export type Initiator = (x?: number, y?: number, matrix?: Matrix) => number
 
 export default class Matrix {
     public width: number;
