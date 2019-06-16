@@ -41,4 +41,24 @@ describe('Matrix', () => {
       [32, 77, 122, 167],
     ])
   })
+
+  it('add to matrix', () => {
+    const matrixA = Matrix.from([
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]
+    ]);
+
+    const matrixB = Matrix.from([
+      [1, 0, 0],
+      [0, 1, 0],
+      [0, 0, 1]
+    ]);
+
+    expect(matrixA.add(matrixB).getItems()).toEqual([
+      [2, 2, 3],
+      [4, 6, 6],
+      [7, 8, 10]
+    ])
+  })
 })
