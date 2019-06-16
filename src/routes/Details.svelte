@@ -6,7 +6,7 @@
   let matrix = Generators.identity(3)
 
   const handleGeneratorClick = generator => () => {
-      matrix = Generators[generator](3, 3)
+    matrix = Generators[generator](3, 3)
   }
 
   const generators = Object.keys(Generators)

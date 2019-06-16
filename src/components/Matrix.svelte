@@ -11,48 +11,48 @@
   $: rows = matrix.getRows()
 
   const createClickHandler = (modifyMatrix) => () => {
-      matrix = modifyMatrix()
+    matrix = modifyMatrix()
   }
 
   const createHandleKeydown = (prevRow, prevCol) => (e) => {
-      let nextRow = prevRow
-      let nextCol = prevCol
-      let stopPropagation = false
+    let nextRow = prevRow
+    let nextCol = prevCol
+    let stopPropagation = false
 
-      if ('ArrowUp' === e.code && e.metaKey) {
-          nextRow = Math.max(0, prevRow - 1)
-          stopPropagation = true
+    if ('ArrowUp' === e.code && e.metaKey) {
+      nextRow = Math.max(0, prevRow - 1)
+      stopPropagation = true
+    }
+
+    if ('ArrowDown' === e.code && e.metaKey) {
+      nextRow = Math.min(matrix.height, prevRow + 1)
+      stopPropagation = true
+    }
+
+    if ('ArrowLeft' === e.code && e.metaKey) {
+      nextCol = Math.max(0, prevCol - 1)
+      stopPropagation = true
+    }
+
+    if ('ArrowRight' === e.code && e.metaKey) {
+      nextCol = Math.min(matrix.width, prevCol + 1)
+      stopPropagation = true
+    }
+
+    if (stopPropagation) {
+      e.stopImmediatePropagation()
+    }
+
+    if (prevRow !== nextRow || prevCol !== nextCol) {
+      const element = tableElement.querySelector(
+        `tr:nth-of-type(${nextRow + 1}) td:nth-of-type(${nextCol + 1}) input`
+      )
+
+      if (element) {
+        element.focus()
+        element.setSelectionRange(0, 0)
       }
-
-      if ('ArrowDown' === e.code && e.metaKey) {
-          nextRow = Math.min(matrix.height, prevRow + 1)
-          stopPropagation = true
-      }
-
-      if ('ArrowLeft' === e.code && e.metaKey) {
-          nextCol = Math.max(0, prevCol - 1)
-          stopPropagation = true
-      }
-
-      if ('ArrowRight' === e.code && e.metaKey) {
-          nextCol = Math.min(matrix.width, prevCol + 1)
-          stopPropagation = true
-      }
-
-      if (stopPropagation) {
-          e.stopImmediatePropagation()
-      }
-
-      if (prevRow !== nextRow || prevCol !== nextCol) {
-          const element = tableElement.querySelector(
-              `tr:nth-of-type(${nextRow + 1}) td:nth-of-type(${nextCol + 1}) input`
-          )
-
-          if (element) {
-              element.focus()
-              element.setSelectionRange(0, 0)
-          }
-      }
+    }
   }
 </script>
 

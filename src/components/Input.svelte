@@ -8,22 +8,22 @@
   let selectionEnd
 
   afterUpdate(() => {
-      element.setSelectionRange(selectionStart, selectionEnd);
+    element.setSelectionRange(selectionStart, selectionEnd);
   })
 
   const handleKeydown = function (e) {
-      selectionStart = this.selectionStart
-      selectionEnd = this.selectionEnd
+    selectionStart = this.selectionStart
+    selectionEnd = this.selectionEnd
 
-      if ('ArrowUp' === e.code) {
-          value += 1
-          e.preventDefault()
-      }
+    if ('ArrowUp' === e.code) {
+      value += 1
+      e.preventDefault()
+    }
 
-      if ('ArrowDown' === e.code) {
-          value -= 1
-          e.preventDefault()
-      }
+    if ('ArrowDown' === e.code) {
+      value -= 1
+      e.preventDefault()
+    }
   }
 </script>
 
