@@ -10,5 +10,15 @@
   },
   "plugins": [
     "svelte3"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true
+      }
+    ]
+  }
 }
