@@ -3,9 +3,8 @@ import Matrix from 'src/lib/matrix'
 type MatrixAnalyzer = (matrix: Matrix) => boolean
 type CellAnalyzer = (value: number, x?: number, y?: number) => boolean
 
-const identity = value => value
-const compose = (...fns: MatrixAnalyzer[]): MatrixAnalyzer => fns.reduceRight((prevFn, nextFn) =>
-    (...args) => nextFn(prevFn(...args)), identity
+const and = (...fns: MatrixAnalyzer[]): MatrixAnalyzer => matrix => fns.reduce((acc, fn) =>
+    acc && fn(matrix), true
 );
 
 const walkOnCells = (callback: Function): MatrixAnalyzer => (matrix: Matrix): boolean => {
@@ -29,14 +28,14 @@ export const isSquare: MatrixAnalyzer = matrix => matrix.width === matrix.height
 export const isLogical: MatrixAnalyzer = walkOnCells(isCellLogical)
 export const isNonnegative: MatrixAnalyzer = walkOnCells(isCellNonnegative)
 export const isZero: MatrixAnalyzer = walkOnCells(isCellZero)
-export const isIdentity: MatrixAnalyzer = compose(isSquare, walkOnCells(isCellIdentity))
-export const isDiagonal: MatrixAnalyzer = compose(isSquare, walkOnCells(isCellDiagonal))
+export const isIdentity: MatrixAnalyzer = and(isSquare, walkOnCells(isCellIdentity))
+export const isDiagonal: MatrixAnalyzer = and(isSquare, walkOnCells(isCellDiagonal))
 
-export const analyzers = [
-  { key: 'square', analyzer: isSquare },
-  { key: 'logical', analyzer: isLogical },
-  { key: 'nonnegative', analyzer: isNonnegative },
-  { key: 'zero', analyzer: isZero },
-  { key: 'identity', analyzer: isIdentity },
-  { key: 'diagonal', analyzer: isDiagonal }
-]
+export default {
+    isSquare,
+    isLogical,
+    isNonnegative,
+    isZero,
+    isIdentity,
+    isDiagonal
+}
