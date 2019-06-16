@@ -48,4 +48,6 @@
   bind:this={element} 
   bind:value={value} 
   on:keydown
+  on:focus
+  on:blur
   on:keydown={handleKeydown} />
