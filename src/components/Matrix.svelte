@@ -176,18 +176,22 @@
   {#if matrix}
     {#if editable}
       {#if focusedCell}
-        <div 
-          class="matrix__remove-column" 
-          style="left: {focusedCell.left}px; width: {focusedCell.width}px"
-          on:mousedown={clickRemoveColumnHandler}>
-          -
-        </div>
-        <div 
-          class="matrix__remove-row" 
-          style="top: {focusedCell.top}px; height: {focusedCell.height}px; line-height: {focusedCell.height}px"
-          on:mousedown={clickRemoveRowHandler}>
-          -
-        </div>
+        {#if matrix.width > 1}
+          <div 
+            class="matrix__remove-column" 
+            style="left: {focusedCell.left}px; width: {focusedCell.width}px"
+            on:mousedown={clickRemoveColumnHandler}>
+            -
+          </div>
+        {/if}
+        {#if matrix.height > 1}
+          <div 
+            class="matrix__remove-row" 
+            style="top: {focusedCell.top}px; height: {focusedCell.height}px; line-height: {focusedCell.height}px"
+            on:mousedown={clickRemoveRowHandler}>
+            -
+          </div>
+        {/if}
       {:else}
         <div 
           class="matrix__create-row  matrix__create-row--above" 
