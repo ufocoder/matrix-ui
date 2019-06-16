@@ -110,7 +110,6 @@ export default class Matrix {
     @autobind
     public addRowAbove(withInitial = 0): Matrix {
       this.items.unshift(this.createRow(withInitial))
-      this.height++;
 
       return Matrix.from(this.items);
     }
@@ -118,7 +117,6 @@ export default class Matrix {
     @autobind
     public addRowBelow(withInitial = 0): Matrix {
       this.items.push(this.createRow(withInitial))
-      this.height++;
 
       return Matrix.from(this.items);
     }
@@ -126,7 +124,6 @@ export default class Matrix {
     @autobind
     public addColumnLeft(withInitial = 0): Matrix {
       this.items.forEach(row => row.unshift(withInitial));
-      this.width++;
 
       return Matrix.from(this.items);
     }
@@ -134,8 +131,21 @@ export default class Matrix {
     @autobind
     public addColumnRight(withInitial = 0): Matrix {
       this.items.forEach(row => row.push(withInitial));
-      this.width++;
       
+      return Matrix.from(this.items);
+    }
+
+    @autobind
+    public removeColumn(index: number): Matrix {
+      this.items.forEach(row => {
+        row.splice(index, 1)
+      })
+      return Matrix.from(this.items);
+    }
+
+    @autobind
+    public removeRow(index: number): Matrix {
+      this.items.splice(index, 1)
       return Matrix.from(this.items);
     }
 

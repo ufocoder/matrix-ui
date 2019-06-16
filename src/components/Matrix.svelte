@@ -7,8 +7,38 @@
   export let matrix = new Matrix()
 
   let tableElement
+  let focusedCell
 
   $: rows = matrix.getRows()
+  
+  const handleCellBlur = () => {
+    focusedCell = null
+  }
+
+  const createHandleCellFocus = (row, column) => (e) => {
+    const cellElement = e.target.parentElement
+    const tableBounding = tableElement.getBoundingClientRect()
+    const cellBounding = cellElement.getBoundingClientRect()
+
+    focusedCell = {
+      column,
+      row,
+      height: cellBounding.height,
+      width: cellBounding.width,
+      left: cellBounding.left - tableBounding.left,
+      top: cellBounding.top - tableBounding.top,
+    }
+  }
+
+  const clickRemoveColumnHandler = () => {
+    matrix = matrix.removeColumn(focusedCell.column)
+    focusedCell = null
+  }
+
+  const clickRemoveRowHandler = () => {
+    matrix = matrix.removeRow(focusedCell.row)
+    focusedCell = null
+  }
 
   const createClickHandler = (modifyMatrix) => () => {
     matrix = modifyMatrix()
@@ -120,34 +150,66 @@
     writing-mode: vertical-rl;
   }
   .matrix__create-column:hover,
-  .matrix__create-row:hover {
+  .matrix__remove-column:hover,
+  .matrix__create-row:hover,
+  .matrix__remove-row:hover {
     cursor: pointer;
   } 
+  .matrix__remove-column {
+    position: absolute; 
+    background: #f0f0f0; 
+    top: -30px; 
+    text-align: center;
+    line-height: 30px;
+    height: 30px
+  }
+  .matrix__remove-row {
+    position: absolute; 
+    text-align: center;
+    background: #f0f0f0; 
+    left: -30px;      
+    width: 30px; 
+  }
 </style>
 
 <div class="matrix">
   {#if matrix}
     {#if editable}
-      <div 
-        class="matrix__create-row  matrix__create-row--above" 
-        on:click={createClickHandler(matrix.addRowAbove)}>
-        + add row
-      </div>
-      <div 
-        class="matrix__create-column matrix__create-column--left" 
-        on:click={createClickHandler(matrix.addColumnLeft)}>
-        + add column
-      </div>
-      <div 
-        class="matrix__create-column matrix__create-column--right" 
-        on:click={createClickHandler(matrix.addColumnRight)}>
-        + add column
-      </div>
-      <div
-        class="matrix__create-row matrix__create-row--below" 
-        on:click={createClickHandler(matrix.addRowBelow)}>
-        + add row
-      </div>
+      {#if focusedCell}
+        <div 
+          class="matrix__remove-column" 
+          style="left: {focusedCell.left}px; width: {focusedCell.width}px"
+          on:mousedown={clickRemoveColumnHandler}>
+          -
+        </div>
+        <div 
+          class="matrix__remove-row" 
+          style="top: {focusedCell.top}px; height: {focusedCell.height}px; line-height: {focusedCell.height}px"
+          on:mousedown={clickRemoveRowHandler}>
+          -
+        </div>
+      {:else}
+        <div 
+          class="matrix__create-row  matrix__create-row--above" 
+          on:mousedown={createClickHandler(matrix.addRowAbove)}>
+          +
+        </div>
+        <div 
+          class="matrix__create-column matrix__create-column--left" 
+          on:mousedown={createClickHandler(matrix.addColumnLeft)}>
+          +
+        </div>
+        <div 
+          class="matrix__create-column matrix__create-column--right" 
+          on:mousedown={createClickHandler(matrix.addColumnRight)}>
+          +
+        </div>
+        <div
+          class="matrix__create-row matrix__create-row--below" 
+          on:mousedown={createClickHandler(matrix.addRowBelow)}>
+          +
+        </div>
+      {/if}
     {/if}
     <table class="matrix-table" bind:this={tableElement}>
       {#each rows as row, i}
@@ -155,7 +217,11 @@
             {#each row as number, j}
               <td class="matrix-cell">
                 {#if editable}
-                  <Input bind:value={number} on:keydown={createHandleKeydown(i + 1, j + 1)} />
+                  <Input 
+                    bind:value={number} 
+                    on:blur={handleCellBlur}
+                    on:focus={createHandleCellFocus(i, j)}
+                    on:keydown={createHandleKeydown(i + 1, j + 1)} />
                 {:else}
                   {number}
                 {/if}
