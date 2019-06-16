@@ -1,4 +1,4 @@
-import Matrix, { Size } from "./matrix";
+import Matrix, { Initiator } from "./matrix";
 
 
 export const generateNumber = (from: number, to: number): number => (

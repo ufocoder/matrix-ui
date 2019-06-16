@@ -3,7 +3,7 @@ import autobind from 'autobind'
 export type Items = number[][];
 export type Rows =  number[][];
 export type Row = number[];
-export type Size = { width: number, height: number }
+export interface Size { width: number; height: number }
 export type Initiator = (x?: number, y?: number, matrix?: Size) => number
 
 export default class Matrix {
