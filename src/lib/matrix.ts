@@ -4,7 +4,7 @@ export type Items = number[][];
 export type Rows =  number[][];
 export type Row = number[];
 export interface Size { width: number; height: number }
-export type Initiator = (x?: number, y?: number, matrix?: Size) => number
+export type Initiator = (x?: number, y?: number, size?: Size) => number
 
 export default class Matrix {
     public width: number;
@@ -46,8 +46,8 @@ export default class Matrix {
     
     public static create(width: number, height: number, initial: number | Initiator = 0): Matrix {
         return new Matrix(
-            Array.from(new Array(height)).map((_, i) => (
-                Array.from(new Array(width)).map((__, j) => (
+            Array.from(new Array(height)).map((_, j) => (
+                Array.from(new Array(width)).map((__, i) => (
                     typeof initial === "function" ? initial(i, j, { width, height }) : initial
                 ))
             ))
@@ -76,6 +76,10 @@ export default class Matrix {
 
     public static from(items: Items): Matrix {
         return new Matrix(items);
+    }
+
+    public getItems(): Items {
+      return this.cloneItems(this.items);
     }
 
     protected createRow(withInitial = 0): Row {
