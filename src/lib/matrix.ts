@@ -3,7 +3,8 @@ import autobind from 'autobind'
 export type Items = number[][];
 export type Rows =  number[][];
 export type Row = number[];
-export type Initiator = (x?: number, y?: number, matrix?: Matrix) => number
+export type Size = { width: number, height: number }
+export type Initiator = (x?: number, y?: number, matrix?: Size) => number
 
 export default class Matrix {
     public width: number;
@@ -47,7 +48,7 @@ export default class Matrix {
         return new Matrix(
             Array.from(new Array(height)).map((_, i) => (
                 Array.from(new Array(width)).map((__, j) => (
-                    typeof initial === "function" ? initial(i, j) : initial
+                    typeof initial === "function" ? initial(i, j, { width, height }) : initial
                 ))
             ))
         );

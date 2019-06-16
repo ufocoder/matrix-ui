@@ -1,4 +1,4 @@
-import Matrix, { Initiator } from "./matrix";
+import Matrix, { Size } from "./matrix";
 
 
 export const generateNumber = (from: number, to: number): number => (
@@ -11,7 +11,7 @@ export const CellInitiator = {
     diagonal: (x, y) => x === y ? generateNumber(-100, 100) : 0,
     logical: () => generateNumber(0, 1),
     nonnegative: () => generateNumber(0, 100),
-    incremental: (x, y, matrix) => x + y * matrix.width + 1
+    incremental: (x, y, { width }) => x + y * width + 1
 }
 
 const createBasicGenerator = (cellInitiator: Initiator) => (width: number, height: number) => (
