@@ -2,6 +2,7 @@
   import Router, { link } from 'svelte-spa-router'
   import Home from './routes/Home.svelte'
   import Details from './routes/Details.svelte'
+  import AddMatrix from './routes/AddMatrix.svelte'
   import MultiplyMatrix from './routes/MultiplyMatrix.svelte'
   import MultiplyNumber from './routes/MultiplyNumber.svelte'
   import NotFound from './routes/NotFound.svelte'
@@ -9,6 +10,7 @@
   const routes = {
     '/': Home,
     '/matrix/details': Details,
+    '/matrix/add/matrix': AddMatrix,
     '/matrix/multiply/matrix': MultiplyMatrix,
     '/matrix/multiply/number': MultiplyNumber,
     '*': NotFound,
@@ -77,6 +79,9 @@
             <ul class="menu menu-nav">
               <li class="menu-item">
                 <a use:link href="/matrix/details">Details</a>
+              </li>
+              <li class="menu-item">
+                <a use:link href="/matrix/add/matrix">Add two matrix</a>
               </li>
               <li class="menu-item">
                 <a use:link href="/matrix/multiply/number">Multiply on number</a>
