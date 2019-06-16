@@ -3,6 +3,7 @@ import autobind from 'autobind'
 type Items = number[][];
 type Rows =  number[][];
 type Row = number[];
+type Initiator = (x?: number, y?: number, matrix?: Matrix) => number
 
 export default class Matrix {
     public width: number;
@@ -42,34 +43,34 @@ export default class Matrix {
         return true;
     }
     
-    public static create(width: number, height: number, initial: number | Function = 0): Matrix {
-      return new Matrix(Array.from(
-        (new Array(height)).map((_, i) => (
-          Array.from(new Array(width)).map((__, j) => (
-            typeof initial === "function" ? initial(i, j) : initial
-          ))
-        ))
-      ));
+    public static create(width: number, height: number, initial: number | Initiator = 0): Matrix {
+        return new Matrix(
+            Array.from(new Array(height)).map((_, i) => (
+                Array.from(new Array(width)).map((__, j) => (
+                    typeof initial === "function" ? initial(i, j) : initial
+                ))
+            ))
+        );
     }
 
     public static isEqual(firstMatrix: Matrix, secondMatrix: Matrix): boolean {
-      if (firstMatrix.height !== secondMatrix.height) {
-        return false
-      }
-
-      if (firstMatrix.width !== secondMatrix.width) {
-        return false
-      }
-
-      for (let i = 0; i < firstMatrix.width; i++) {
-        for (let j = 0; j < firstMatrix.height; j++) {
-          if (firstMatrix.getCell(i, j) !== secondMatrix.getCell(i, j)) {
-            return false;
-          }
+        if (firstMatrix.height !== secondMatrix.height) {
+            return false
         }
-      }
 
-      return true;
+        if (firstMatrix.width !== secondMatrix.width) {
+            return false
+        }
+
+        for (let i = 0; i < firstMatrix.width; i++) {
+            for (let j = 0; j < firstMatrix.height; j++) {
+                if (firstMatrix.getCell(i, j) !== secondMatrix.getCell(i, j)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public static from(items: Items): Matrix {
@@ -99,11 +100,6 @@ export default class Matrix {
     @autobind
     public getCell(x: number, y: number): number {
         return this.items[x][y];
-    }
-
-    @autobind
-    public getData(): Items {
-        return this.cloneItems(this.items);
     }
 
     @autobind
@@ -140,39 +136,40 @@ export default class Matrix {
 
     @autobind
     public multiplyByValue(multiplier: number): Matrix {
+        const matrix = Matrix.from(this.items)
         for (let i = 0; i < this.height; i++) {
             for (let j = 0; j < this.width; j++) {
-                this.items[i][j] *= multiplier
+                matrix.items[i][j] *= multiplier
             }
         }
 
-        return Matrix.from(this.items);
+        return matrix;
     }
 
     @autobind
-    public checkMultiplyByMatrix(matrix: Matrix): boolean {
+    public canMultiplyOnMatrix(matrix: Matrix): boolean {
         return this.width === matrix.height
     }
 
     @autobind
     public multiplyByMatrix(matrix: Matrix): Matrix {
-        if (this.checkMultiplyByMatrix(matrix)) {
+        if (!this.canMultiplyOnMatrix(matrix)) {
             throw new TypeError("Incorrect multiplier")
         }
         
         const newMatrix = Matrix.create(matrix.width, this.height);
 
         for (let i = 0; i < matrix.width; i++) {
-            for (let j = 0; j < this.height; i++) {
+            for (let j = 0; j < this.height; j++) {
                 let value = 0
-                for (let r = 0; this.width < r; r++) {
-                    value += matrix.getCell(i, r) + this.getCell(r, j)
+                for (let r = 0; r < this.width; r++) {
+                    value += matrix.getCell(i, r) * this.getCell(r, j)
                 }
-                newMatrix[j][i] = value
+                newMatrix.items[j][i] = value
             }
         }
         
-        return Matrix.from(this.items)
+        return newMatrix
     }
 
     @autobind
