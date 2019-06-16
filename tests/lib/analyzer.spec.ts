@@ -98,16 +98,3 @@ describe('Analyzer', () => {
     })
   })
 }) 
-
-/*
-,
-isRectangular,
-isLineVector,
-isColumnVector,
-isScalar,
-isZero,
-isLogical,
-isNonnegative,
-isDiagonal,
-isIdentity
-*/

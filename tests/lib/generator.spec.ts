@@ -31,7 +31,6 @@ describe('Generator', () => {
     const height = 2
     const matrix = Generator.incremental(width, height);
     const items = matrix.getItems()
-    console.log(items);
     
     expect(items).toEqual([
       [1, 2, 3, 4],
