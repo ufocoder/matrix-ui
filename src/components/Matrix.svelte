@@ -44,10 +44,13 @@
       }
 
       if (prevRow !== nextRow || prevCol !== nextCol) {
-          const element = tableElement.querySelector(`tr:nth-of-type(${nextRow}) td:nth-of-type(${nextCol}) input`)
+          const element = tableElement.querySelector(
+              `tr:nth-of-type(${nextRow + 1}) td:nth-of-type(${nextCol + 1}) input`
+          )
 
           if (element) {
               element.focus()
+              element.setSelectionRange(0, 0)
           }
       }
   }
