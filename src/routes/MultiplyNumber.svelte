@@ -11,20 +11,6 @@
 
 </script>
 
-<style>
-.expression {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.expression-operator {
-  flex: 1;
-}
-.expression-operand {
-  flex: 1;
-}
-</style>
 
 <h2>Multiply matrix on number </h2>
 

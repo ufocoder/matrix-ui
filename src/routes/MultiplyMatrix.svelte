@@ -8,23 +8,8 @@
 
   $: canBeMultiplied = matrixA.canMultiplyOnMatrix(matrixB)
   $: matrixC = canBeMultiplied ? matrixA.multiply(matrixB) : null
-
 </script>
 
-<style>
-.expression {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.expression-operator {
-  flex: 1;
-}
-.expression-operand {
-  flex: 1;
-}
-</style>
 
 <h2>Multiply matrix on matrix </h2>
 
@@ -45,7 +30,7 @@
     {#if canBeMultiplied}
       <MatrixComponent matrix={matrixC} />
     {:else} 
-      Not allowed
+      Incorrect matrix demensions
     {/if}
   </div>
 </div>

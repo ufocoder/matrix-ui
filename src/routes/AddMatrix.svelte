@@ -8,23 +8,7 @@
 
   $: canBeAdded = matrixA.canAddToMatrix(matrixB)
   $: matrixC = canBeAdded ? matrixA.add(matrixB) : null
-
 </script>
-
-<style>
-.expression {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.expression-operator {
-  flex: 1;
-}
-.expression-operand {
-  flex: 1;
-}
-</style>
 
 <h2>Add matrix to matrix </h2>
 
@@ -46,7 +30,7 @@
     {#if canBeAdded}
       <MatrixComponent matrix={matrixC} />
     {:else} 
-      Not allowed
+      Incorrect matrix demensions
     {/if}
   </div>
 </div>

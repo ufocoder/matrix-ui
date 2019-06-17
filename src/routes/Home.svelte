@@ -1,6 +1,3 @@
-<h1>Math UI</h1>
-
-
 <h3>Keyboard control</h3>
 
 <h4>Matrix cell navigation</h4>
