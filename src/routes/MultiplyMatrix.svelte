@@ -15,11 +15,11 @@
 .expression {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .expression-operator {
   flex: 1;
-  margin: 0 20px;
 }
 .expression-operand {
   flex: 1;
