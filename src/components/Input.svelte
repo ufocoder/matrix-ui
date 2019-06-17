@@ -33,7 +33,9 @@
     text-align: center;
     border: 0;
     padding: 10px;
-    height: 50px;
+    height: 70px;
+    line-height: 70px;
+    width: 100%;
   }
   .input:focus {
     outline-color: #807fe2;
@@ -44,7 +46,8 @@
 
 <input 
   class="input" 
-  type="text" 
+  type="text"
+  pattern="-?[0-9]"
   bind:this={element} 
   bind:value={value} 
   on:keydown

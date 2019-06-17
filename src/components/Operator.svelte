@@ -6,8 +6,8 @@
   .operator {
     opacity: 0.8;
     padding: 10px;
-    margin: 10px;
     user-select: none;
+    text-align: center;
     font-size: 40px;
   }
 </style>

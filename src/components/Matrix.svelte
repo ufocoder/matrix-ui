@@ -103,8 +103,10 @@
     border-left: 1px solid #eee;
     padding: 0;
     margin: 0;
-    min-width: 50px;
-    line-height: 50px;
+    width: 70px;
+    max-width: 70px;
+    min-width: 70px;
+    line-height: 70px;
     text-align: center;
   }
   .matrix-cell:last-child {
@@ -112,6 +114,7 @@
   }
   .matrix-row {
     display: block;
+    height: 70px;
     border-bottom: 1px solid #eee;
   }
   .matrix-row:first-child {
@@ -124,6 +127,9 @@
     text-align: center;
     height: 30px;
     line-height: 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease-in-out;
   }
   .matrix__create-row--above {
     top: -30px;
@@ -131,6 +137,13 @@
   .matrix__create-row--below {
     bottom: -30px;
   } 
+  
+  .matrix:hover .matrix__create-column,
+  .matrix:hover .matrix__create-row {
+    opacity: 1;
+    visibility: visible;
+  }
+
   .matrix__create-column {
     text-align: center;
     background: #eee;
@@ -139,6 +152,9 @@
     width: 30px;
     line-height: 30px;
     bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease-in-out;
   }
   .matrix__create-column--left {
     left: -30px;

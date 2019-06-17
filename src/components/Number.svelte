@@ -10,7 +10,6 @@
     border-radius: 1px;
     display: block;
     background: #eee;
-    margin: 10px 0;
   }
 </style>
 
