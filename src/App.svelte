@@ -1,5 +1,6 @@
 <script>
   import Router, { link } from 'svelte-spa-router'
+  import active from 'svelte-spa-router/active'
   import Home from './routes/Home.svelte'
   import Details from './routes/Details.svelte'
   import AddMatrix from './routes/AddMatrix.svelte'
@@ -30,6 +31,7 @@
   color: #5755d9;
   height: 2rem;
   left: 1.5rem;
+  font-size: 1.2rem;
   position: fixed;
   top: .85rem;
 }
@@ -68,30 +70,33 @@
 <div class="docs-container">
   <div class="docs-sidebar">
     <div class="docs-brand">
-      <a href="/" class="navbar-brand">Math UI</a>
+      <a href="/" class="navbar-brand">
+        Matrix UI
+      </a>
     </div>
     <div class="docs-nav">
-      <div class="accordion-container">
-        <div class="accordion">
-          <input id="accordion-matrix" type="checkbox" name="docs-accordion-checkbox" hidden checked="checked">
-          <label class="accordion-header c-hand" for="accordion-matrix">Matrix</label>
-          <div class="accordion-body">
-            <ul class="menu menu-nav">
-              <li class="menu-item">
-                <a use:link href="/matrix/details">Details</a>
-              </li>
-              <li class="menu-item">
-                <a use:link href="/matrix/add/matrix">Add two matrix</a>
-              </li>
-              <li class="menu-item">
-                <a use:link href="/matrix/multiply/number">Multiply on number</a>
-              </li>
-              <li class="menu-item">
-                <a use:link href="/matrix/multiply/matrix">Multiply on matrix</a>
-              </li>
-          </div>
-        </div>        
-      </div>
+      <ul class="nav">
+        <li class="nav-item" use:active={'/matrix/details'}>
+          <a use:link href="/matrix/details">
+            Single matrix details
+          </a>
+        </li>
+        <li class="nav-item" use:active={'/matrix/add/matrix'}>
+          <a use:link href="/matrix/add/matrix">
+            Add two matrix
+          </a>
+        </li>
+        <li class="nav-item" use:active={'/matrix/multiply/number'}>
+          <a use:link href="/matrix/multiply/number">
+            Multiply on number
+          </a>
+        </li>
+        <li class="nav-item" use:active={'/matrix/multiply/matrix'}>
+          <a use:link href="/matrix/multiply/matrix">
+            Multiply on matrix
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
   <div class="docs-content">
