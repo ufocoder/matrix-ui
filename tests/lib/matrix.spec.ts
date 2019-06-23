@@ -61,4 +61,14 @@ describe('Matrix', () => {
       [7, 8, 10]
     ])
   })
+
+  it('calculates determinant', () => {
+    const matrixA = Matrix.from([
+      [1, 2, 3],
+      [-1, 2, 1],
+      [0, 0, 1]
+    ]);
+
+    expect(matrixA.getDeterminant()).toEqual(4)
+  })
 })
