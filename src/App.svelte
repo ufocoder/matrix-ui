@@ -6,6 +6,7 @@
   import AddMatrix from './routes/AddMatrix.svelte'
   import MultiplyMatrix from './routes/MultiplyMatrix.svelte'
   import MultiplyNumber from './routes/MultiplyNumber.svelte'
+  import Determinant from './routes/Determinant.svelte'
   import NotFound from './routes/NotFound.svelte'
 
   const routes = {
@@ -14,6 +15,7 @@
     '/matrix/add/matrix': AddMatrix,
     '/matrix/multiply/matrix': MultiplyMatrix,
     '/matrix/multiply/number': MultiplyNumber,
+    '/matrix/determinant': Determinant,
     '*': NotFound,
   }
 </script>
@@ -94,6 +96,11 @@
         <li class="nav-item" use:active={'/matrix/multiply/matrix'}>
           <a use:link href="/matrix/multiply/matrix">
             Multiply on matrix
+          </a>
+        </li>
+        <li class="nav-item" use:active={'/matrix/determinant'}>
+          <a use:link href="/matrix/determinant">
+            Get a determinant
           </a>
         </li>
       </ul>

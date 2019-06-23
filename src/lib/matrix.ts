@@ -172,7 +172,7 @@ export default class Matrix {
         throw new TypeError("Incorrect multiplier")
       }
         
-      const newMatrix = Matrix.create(matrix.width, this.height);
+      const newMatrix = Matrix.create(matrix.width, this.height)
 
       for (let i = 0; i < matrix.width; i++) {
         for (let j = 0; j < this.height; j++) {
@@ -207,7 +207,7 @@ export default class Matrix {
         throw new TypeError("Incorrect addend")
       }
         
-      const newMatrix = Matrix.create(this.width, this.height);
+      const newMatrix = Matrix.create(this.width, this.height)
 
       for (let i = 0; i < this.height; i++) {
         for (let j = 0; j < this.width; j++) {
@@ -216,5 +216,42 @@ export default class Matrix {
       }
         
       return newMatrix
+    }
+
+    @autobind
+    public clone(): Matrix {
+      const newMatrix = Matrix.create(this.width, this.height)
+
+      for (let i = 0; i < this.height; i++) {
+        for (let j = 0; j < this.width; j++) {
+          newMatrix.items[i][j] = this.getCell(i, j)
+        }
+      }
+
+      return newMatrix
+    }
+
+    @autobind
+    public isSquareMatrix(): boolean {
+      return this.width === this.height
+    }
+
+    @autobind
+    public getDeterminant(): number {
+      if (!this.isSquareMatrix()) {
+        throw new TypeError("Determinant can't be found")
+      }
+
+      if (this.width === 1) {
+          return this.getCell(0, 0)
+      }
+
+      const row = this.getRow(0)
+      return row.reduce((acc, item, index) => {
+        console.log(this.width);
+        const minor = this.clone().removeRow(0).removeColumn(index)
+        console.log(minor, minor.getDeterminant.bind(minor)());
+        return acc + (-1) ** index * item * minor.getDeterminant.bind(minor)()
+      }, 0)
     }
 }
