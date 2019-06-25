@@ -70,5 +70,15 @@ describe('Matrix', () => {
     ]);
 
     expect(matrixA.getDeterminant()).toEqual(4)
+
+    const matrixB = Matrix.from([
+      [-1, 2, 3, 4, 5],
+      [6, 5, 4, -3, -2],
+      [-5, -4, -3, 2, 1],
+      [4, -3, -2, -1, 4],
+      [-3, -2, -1, 1, 2]
+    ]);
+
+    expect(matrixB.getDeterminant()).toEqual(-92)
   })
 })
