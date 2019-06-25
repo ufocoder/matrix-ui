@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "devDependencies": {
     "@types/jest": "^24.0.15",
-    "@typescript-eslint/eslint-plugin": "^1.10.2",
-    "@typescript-eslint/parser": "^1.10.2",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
     "autobind": "^1.0.3",
     "eslint": "^6.0.0",
     "eslint-plugin-svelte3": "^2.0.0",
@@ -20,7 +20,7 @@
     "rollup-plugin-terser": "^5.0.0",
     "rollup-plugin-typescript": "^1.0.1",
     "sirv-cli": "^0.4.4",
-    "svelte": "^3.5.3",
+    "svelte": "^3.5.4",
     "ts-jest": "^24.0.2",
     "tslib": "^1.10.0",
     "typescript": "^3.5.2"
