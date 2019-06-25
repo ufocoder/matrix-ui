@@ -1,4 +1,5 @@
 import autobind from 'autobind'
+import { isSquare } from 'src/lib/analyzer'
 
 export type Items = number[][];
 export type Rows =  number[][];
@@ -232,13 +233,8 @@ export default class Matrix {
     }
 
     @autobind
-    public isSquareMatrix(): boolean {
-      return this.width === this.height
-    }
-
-    @autobind
     public getDeterminant(): number {
-      if (!this.isSquareMatrix()) {
+      if (!isSquare(this)) {
         throw new TypeError("Determinant can't be found")
       }
 
