@@ -4,6 +4,7 @@
   import Analyzers from 'src/lib/analyzer'
 
   let matrix = Generators.identity(3)
+  $: determinant = Analyzers.isSquare(matrix) && matrix.getDeterminant()
 
   const handleGeneratorClick = generator => () => {
     matrix = Generators[generator](3, 3)
@@ -36,3 +37,14 @@
     </span>
   {/each}
 </div>
+
+<h3>Determinant</h3>
+
+<p>
+  {#if Analyzers.isSquare(matrix)}
+    {determinant}
+  {:else}
+    Incorrect matrix demensions
+  {/if}
+</p>
+
