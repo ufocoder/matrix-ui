@@ -1,4 +1,5 @@
 import autobind from 'autobind'
+import { isSquare } from 'src/lib/analyzer'
 
 export type Items = number[][];
 export type Rows =  number[][];
@@ -216,5 +217,35 @@ export default class Matrix {
       }
         
       return newMatrix
+    }
+
+    @autobind
+    public clone(): Matrix {
+      const newMatrix = Matrix.create(this.width, this.height)
+
+      for (let i = 0; i < this.height; i++) {
+        for (let j = 0; j < this.width; j++) {
+          newMatrix.items[i][j] = this.getCell(i, j)
+        }
+      }
+
+      return newMatrix
+    }
+
+    @autobind
+    public getDeterminant(): number {
+      if (!isSquare(this)) {
+        throw new TypeError("Determinant can't be found")
+      }
+
+      if (this.width === 1) {
+          return this.getCell(0, 0)
+      }
+
+      const row = this.getRow(0)
+      return row.reduce((acc, item, index) => {
+        const minor = this.clone().removeRow(0).removeColumn(index)
+        return acc + (-1) ** index * item * minor.getDeterminant.bind(minor)()
+      }, 0)
     }
 }
