@@ -73,159 +73,158 @@ export default class Matrix {
     return row
   }
 
-    @autobind
+  @autobind
   public getRow(index): Row {
     return this.items.slice()[index] || null
   }
 
-    @autobind
-    public getRows(from, to): Rows {
-      return this.items.slice(from, to)
+  @autobind
+  public getRows(from, to): Rows {
+    return this.items.slice(from, to)
+  }
+
+  @autobind
+  public getCell(x: number, y: number): number {
+    return this.items[x][y];
+  }
+
+  @autobind
+  public addRowAbove(withInitial = 0): Matrix {
+    this.items.unshift(this.createRow(withInitial))
+
+    return Matrix.from(this.items);
+  }
+
+  @autobind
+  public addRowBelow(withInitial = 0): Matrix {
+    this.items.push(this.createRow(withInitial))
+
+    return Matrix.from(this.items);
+  }
+
+  @autobind
+  public addColumnLeft(withInitial = 0): Matrix {
+    this.items.forEach(row => row.unshift(withInitial));
+
+    return Matrix.from(this.items);
+  }
+
+  @autobind
+  public addColumnRight(withInitial = 0): Matrix {
+    this.items.forEach(row => row.push(withInitial));
+    
+    return Matrix.from(this.items);
+  }
+
+  @autobind
+  public removeColumn(index: number): Matrix {
+    this.items.forEach(row => {
+      row.splice(index, 1)
+    })
+    return Matrix.from(this.items);
+  }
+
+  @autobind
+  public removeRow(index: number): Matrix {
+    this.items.splice(index, 1)
+    return Matrix.from(this.items);
+  }
+
+  @autobind
+  public multiplyByValue(multiplier: number): Matrix {
+    const matrix = Matrix.from(this.items)
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
+        matrix.items[i][j] *= multiplier
+      }
     }
 
-    @autobind
-    public getCell(x: number, y: number): number {
-      return this.items[x][y];
+    return matrix;
+  }
+
+  @autobind
+  public canMultiplyOnMatrix(matrix: Matrix): boolean {
+    return this.width === matrix.height
+  }
+
+  @autobind
+  public multiplyByMatrix(matrix: Matrix): Matrix {
+    if (!this.canMultiplyOnMatrix(matrix)) {
+      throw new TypeError("Incorrect multiplier")
     }
-
-    @autobind
-    public addRowAbove(withInitial = 0): Matrix {
-      this.items.unshift(this.createRow(withInitial))
-
-      return Matrix.from(this.items);
-    }
-
-    @autobind
-    public addRowBelow(withInitial = 0): Matrix {
-      this.items.push(this.createRow(withInitial))
-
-      return Matrix.from(this.items);
-    }
-
-    @autobind
-    public addColumnLeft(withInitial = 0): Matrix {
-      this.items.forEach(row => row.unshift(withInitial));
-
-      return Matrix.from(this.items);
-    }
-
-    @autobind
-    public addColumnRight(withInitial = 0): Matrix {
-      this.items.forEach(row => row.push(withInitial));
       
-      return Matrix.from(this.items);
-    }
+    const newMatrix = Matrix.create(matrix.width, this.height);
 
-    @autobind
-    public removeColumn(index: number): Matrix {
-      this.items.forEach(row => {
-        row.splice(index, 1)
-      })
-      return Matrix.from(this.items);
-    }
-
-    @autobind
-    public removeRow(index: number): Matrix {
-      this.items.splice(index, 1)
-      return Matrix.from(this.items);
-    }
-
-    @autobind
-    public multiplyByValue(multiplier: number): Matrix {
-      const matrix = Matrix.from(this.items)
-      for (let i = 0; i < this.height; i++) {
-        for (let j = 0; j < this.width; j++) {
-          matrix.items[i][j] *= multiplier
+    for (let i = 0; i < matrix.width; i++) {
+      for (let j = 0; j < this.height; j++) {
+        let value = 0
+        for (let r = 0; r < this.width; r++) {
+          value += matrix.getCell(r, i) * this.getCell(j, r)
         }
+        newMatrix.items[j][i] = value
       }
+    }
+      
+    return newMatrix
+  }
 
-      return matrix;
+  @autobind
+  public multiply(multiplier: Matrix | number): Matrix {
+    if (multiplier instanceof Matrix) {
+      return this.multiplyByMatrix(multiplier)
     }
 
-    @autobind
-    public canMultiplyOnMatrix(matrix: Matrix): boolean {
-      return this.width === matrix.height
+    return this.multiplyByValue(multiplier)
+  }
+
+  @autobind
+  public canAddToMatrix(matrix: Matrix): boolean {
+    return this.width === matrix.width && this.height === matrix.height
+  }
+
+  @autobind
+  public add(matrix: Matrix): Matrix {
+    if (!this.canAddToMatrix(matrix)) {
+      throw new TypeError("Incorrect addend")
+    }
+      
+    const newMatrix = Matrix.create(this.width, this.height);
+
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
+        newMatrix.items[i][j] = matrix.getCell(i, j) + this.getCell(i, j)
+      }
+    }
+      
+    return newMatrix
+  }
+
+  @autobind
+  public clone(): Matrix {
+    const newMatrix = Matrix.create(this.width, this.height)
+
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
+        newMatrix.items[i][j] = this.getCell(i, j)
+      }
     }
 
-    @autobind
-    public multiplyByMatrix(matrix: Matrix): Matrix {
-      if (!this.canMultiplyOnMatrix(matrix)) {
-        throw new TypeError("Incorrect multiplier")
-      }
-        
-      const newMatrix = Matrix.create(matrix.width, this.height);
+    return newMatrix
+  }
 
-      for (let i = 0; i < matrix.width; i++) {
-        for (let j = 0; j < this.height; j++) {
-          let value = 0
-          for (let r = 0; r < this.width; r++) {
-            value += matrix.getCell(r, i) * this.getCell(j, r)
-          }
-          newMatrix.items[j][i] = value
-        }
-      }
-        
-      return newMatrix
+  @autobind
+  public getDeterminant(): number {
+    if (!isSquare(this)) {
+      throw new TypeError("Determinant can't be found")
     }
 
-    @autobind
-    public multiply(multiplier: Matrix | number): Matrix {
-      if (multiplier instanceof Matrix) {
-        return this.multiplyByMatrix(multiplier)
-      }
-
-      return this.multiplyByValue(multiplier)
+    if (this.width === 1) {
+      return this.getCell(0, 0)
     }
 
-    @autobind
-    public canAddToMatrix(matrix: Matrix): boolean {
-      return this.width === matrix.width && this.height === matrix.height
-    }
-
-    @autobind
-    public add(matrix: Matrix): Matrix {
-      if (!this.canAddToMatrix(matrix)) {
-        throw new TypeError("Incorrect addend")
-      }
-        
-      const newMatrix = Matrix.create(this.width, this.height);
-
-      for (let i = 0; i < this.height; i++) {
-        for (let j = 0; j < this.width; j++) {
-          newMatrix.items[i][j] = matrix.getCell(i, j) + this.getCell(i, j)
-        }
-      }
-        
-      return newMatrix
-    }
-
-    @autobind
-    public clone(): Matrix {
-      const newMatrix = Matrix.create(this.width, this.height)
-
-      for (let i = 0; i < this.height; i++) {
-        for (let j = 0; j < this.width; j++) {
-          newMatrix.items[i][j] = this.getCell(i, j)
-        }
-      }
-
-      return newMatrix
-    }
-
-    @autobind
-    public getDeterminant(): number {
-      if (!isSquare(this)) {
-        throw new TypeError("Determinant can't be found")
-      }
-
-      if (this.width === 1) {
-        return this.getCell(0, 0)
-      }
-
-      const row = this.getRow(0)
-      return row.reduce((acc, item, index) => {
-        const minor = this.clone().removeRow(0).removeColumn(index)
-        return acc + (-1) ** index * item * minor.getDeterminant.bind(minor)()
-      }, 0)
-    }
+    return this.getRow(0).reduce((acc, item, index) => {
+      const minor = this.clone().removeRow(0).removeColumn(index)
+      return acc + (-1) ** index * item * minor.getDeterminant.bind(minor)()
+    }, 0)
+  }
 }
