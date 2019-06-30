@@ -55,26 +55,6 @@ export default class Matrix {
     );
   }
 
-  public static isEqual(firstMatrix: Matrix, secondMatrix: Matrix): boolean {
-    if (firstMatrix.height !== secondMatrix.height) {
-      return false
-    }
-
-    if (firstMatrix.width !== secondMatrix.width) {
-      return false
-    }
-
-    for (let i = 0; i < firstMatrix.width; i++) {
-      for (let j = 0; j < firstMatrix.height; j++) {
-        if (firstMatrix.getCell(i, j) !== secondMatrix.getCell(i, j)) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
   public static from(items: Items): Matrix {
     return new Matrix(items);
   }
@@ -239,7 +219,7 @@ export default class Matrix {
       }
 
       if (this.width === 1) {
-          return this.getCell(0, 0)
+        return this.getCell(0, 0)
       }
 
       const row = this.getRow(0)
