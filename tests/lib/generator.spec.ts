@@ -20,10 +20,10 @@ describe('Generator', () => {
     const items = matrix.getItems()
 
     expect(items).toEqual([
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0]
     ])
   })
   it('incremental', () => {

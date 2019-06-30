@@ -31,7 +31,7 @@
     "dev": "run-p start:dev autobuild",
     "start": "sirv public",
     "start:dev": "sirv public --dev",
-    "lint": "eslint src/**/*",
+    "lint": "eslint ./src/**/* ./tests/**/*",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
