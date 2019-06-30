@@ -1,6 +1,5 @@
-import Analyzer from '../../src/lib/analyzer'
-import Matrix from '../../src/lib/matrix'
-
+import Analyzer from 'src/lib/analyzer'
+import Matrix from 'src/lib/matrix'
 
 const testCases = [
   {

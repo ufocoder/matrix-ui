@@ -1,5 +1,5 @@
-import Comparer from '../../src/lib/comparer'
-import Matrix from '../../src/lib/matrix'
+import Comparer from 'src/lib/comparer'
+import Matrix from 'src/lib/matrix'
 
 describe('Comparer', () => {
   it('isTransposed', () => {

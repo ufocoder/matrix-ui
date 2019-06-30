@@ -1,4 +1,4 @@
-import Generator from '../../src/lib/generator'
+import Generator from 'src/lib/generator'
 
 describe('Generator', () => {
   it('identity', () => {

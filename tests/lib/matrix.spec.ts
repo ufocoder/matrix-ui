@@ -1,4 +1,4 @@
-import Matrix from '../../src/lib/matrix'
+import Matrix from 'src/lib/matrix'
 
 describe('Matrix', () => {
   it('create', () => {
