@@ -2,12 +2,15 @@
   import Generators from 'src/lib/generator'
   import MatrixComponent from 'src/components/Matrix'
   import OperatorComponent from 'src/components/Operator'
+  import Operators from 'src/lib/operators'
 
   let matrixA = Generators.incremental(3, 3)
   let matrixB = Generators.identity(3)
 
-  $: canBeAdded = matrixA.canAddToMatrix(matrixB)
-  $: matrixC = canBeAdded ? matrixA.add(matrixB) : null
+  $: {
+    canBeCalculated = Operators.can.add(matrixA, matrixB)
+    matrixC = canBeCalculated ? Operators.add(matrixA, matrixB) : null
+  }
 </script>
 
 <h2>Add matrix to matrix </h2>
@@ -27,7 +30,7 @@
     <OperatorComponent operator="=" />
   </div>
   <div class="expression-operand">
-    {#if canBeAdded}
+    {#if canBeCalculated}
       <MatrixComponent matrix={matrixC} />
     {:else} 
       Incorrect matrix demensions

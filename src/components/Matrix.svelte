@@ -1,6 +1,7 @@
 <script>
   import Input from 'src/components/Input'
   import Matrix from 'src/lib/matrix'
+  import Operators from 'src/lib/operators'
 
   export let editable = false
   export let fixed = false
@@ -31,17 +32,17 @@
   }
 
   const clickRemoveColumnHandler = () => {
-    matrix = matrix.removeColumn(focusedCell.column)
+    matrix = Operators.remove.column(matrix, focusedCell.column)
     focusedCell = null
   }
 
   const clickRemoveRowHandler = () => {
-    matrix = matrix.removeRow(focusedCell.row)
+    matrix = Operators.remove.row(matrix, focusedCell.row)
     focusedCell = null
   }
 
   const createClickHandler = (modifyMatrix) => () => {
-    matrix = modifyMatrix()
+    matrix = modifyMatrix(matrix)
   }
 
   const createHandleKeydown = (prevRow, prevCol) => (e) => {
@@ -211,22 +212,22 @@
       {:else}
         <div 
           class="matrix__create-row  matrix__create-row--above" 
-          on:mousedown={createClickHandler(matrix.addRowAbove)}>
+          on:mousedown={createClickHandler(Operators.create.row.above)}>
           +
         </div>
         <div 
           class="matrix__create-column matrix__create-column--left" 
-          on:mousedown={createClickHandler(matrix.addColumnLeft)}>
+          on:mousedown={createClickHandler(Operators.create.column.left)}>
           +
         </div>
         <div 
           class="matrix__create-column matrix__create-column--right" 
-          on:mousedown={createClickHandler(matrix.addColumnRight)}>
+          on:mousedown={createClickHandler(Operators.create.column.right)}>
           +
         </div>
         <div
           class="matrix__create-row matrix__create-row--below" 
-          on:mousedown={createClickHandler(matrix.addRowBelow)}>
+          on:mousedown={createClickHandler(Operators.create.row.below)}>
           +
         </div>
       {/if}

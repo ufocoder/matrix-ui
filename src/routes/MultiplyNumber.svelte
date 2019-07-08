@@ -3,12 +3,12 @@
   import MatrixComponent from 'src/components/Matrix'
   import NumberComponent from 'src/components/Number'
   import OperatorComponent from 'src/components/Operator'
+  import Operators from 'src/lib/operators'
 
   let matrixA = Generators.incremental(3, 3)
   let multiplier = 5
 
-  $: matrixB = matrixA.multiply(multiplier)
-
+  $: matrixB = Operators.multiply(matrixA, multiplier)
 </script>
 
 

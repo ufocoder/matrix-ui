@@ -2,18 +2,25 @@
   import Component from 'src/components/Matrix'
   import Generators from 'src/lib/generator'
   import Analyzers from 'src/lib/analyzer'
-
-  let matrix = Generators.identity(3)
-  $: determinant = Analyzers.isSquare(matrix) && matrix.getDeterminant()
-
-  const handleGeneratorClick = generator => () => {
-    matrix = Generators[generator](3, 3)
-  }
+  import Operators from 'src/lib/operators'
 
   const generators = Object.keys(Generators)
   const analyzers = Object.keys(Analyzers)
 
-  $: classifiers = analyzers.filter(analyzer => Analyzers[analyzer](matrix))
+  const handleGeneratorClick = (generator) => () => {
+    matrix = Generators[generator](3, 3)
+  }
+
+  let matrix = Generators.identity(3)
+  let canBeCalculated = false
+  let determinant = null
+  let classifiers = []
+
+  $: {
+    canBeCalculated = Operators.can.determinant(matrix)
+    determinant = canBeCalculated ? Operators.determinant(matrix) : null
+    classifiers = analyzers.filter(analyzer => Analyzers[analyzer](matrix))
+  }
 </script>
 
 <h2>Matrix</h2>
@@ -41,7 +48,7 @@
 <h3>Determinant</h3>
 
 <p>
-  {#if Analyzers.isSquare(matrix)}
+  {#if canBeCalculated}
     {determinant}
   {:else}
     Incorrect matrix demensions
