@@ -7,14 +7,14 @@
   const generators = Object.keys(Generators)
   const analyzers = Object.keys(Analyzers)
 
-  const handleGeneratorClick = (generator) => () => {
-    matrix = Generators[generator](3, 3)
-  }
-
   let matrix = Generators.identity(3)
   let canBeCalculated = false
   let determinant = null
   let classifiers = []
+
+  const handleGeneratorClick = (generator) => () => {
+    matrix = Generators[generator](3, 3)
+  }
 
   $: {
     canBeCalculated = Operators.can.determinant(matrix)

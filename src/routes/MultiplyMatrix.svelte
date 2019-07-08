@@ -6,6 +6,8 @@
 
   let matrixA = Generators.incremental(3, 3)
   let matrixB = Generators.identity(3)
+  let matrixC = null
+  let canBeCalculated = false
 
   $: {
     canBeCalculated = Operators.can.multiply(matrixA, matrixB)
