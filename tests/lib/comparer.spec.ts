@@ -1,7 +1,7 @@
 import Comparer from 'src/lib/comparer'
 import Matrix from 'src/lib/matrix'
 
-describe('Comparer', () => {
+describe('Matrix comparer', () => {
   it('isTransposed', () => {
     const matrixA = Matrix.from([
       [1, 1, 1, 1],

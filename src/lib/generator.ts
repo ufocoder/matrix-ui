@@ -1,4 +1,4 @@
-import Matrix, { Initiator } from "./matrix";
+import Matrix, { Initiator } from "src/lib/matrix";
 
 
 export const generateNumber = (from: number, to: number): number => (

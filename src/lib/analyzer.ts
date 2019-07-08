@@ -8,9 +8,9 @@ const and = (...fns: MatrixAnalyzer[]): MatrixAnalyzer => matrix => fns.reduce((
 );
 
 const walkOnCells = (callback: Function): MatrixAnalyzer => (matrix: Matrix): boolean => {
-  for (let x=0; x < matrix.width; x++) {
-    for (let y=0; y < matrix.height; y++) {
-      if (!callback(matrix.getCell(x,y), x, y)) {
+  for (let x=0; x < matrix.height; x++) {
+    for (let y=0; y < matrix.width; y++) {
+      if (!callback(matrix.items[x][y], x, y)) {
         return false;
       }
     }

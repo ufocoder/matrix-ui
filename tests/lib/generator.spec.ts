@@ -1,6 +1,6 @@
 import Generator from 'src/lib/generator'
 
-describe('Generator', () => {
+describe('Matrix generator', () => {
   it('identity', () => {
     const size = 4
     const matrix = Generator.identity(size);

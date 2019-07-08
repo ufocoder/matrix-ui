@@ -1,4 +1,4 @@
-import Matrix from './matrix'
+import Matrix from 'src/lib/matrix'
 
 type MatrixComparer = (matrixA: Matrix, matrixB: Matrix) => boolean
 
@@ -13,7 +13,7 @@ export const isEqual: MatrixComparer = (matrixA, matrixB) => {
 
   for (let i = 0; i < matrixA.width; i++) {
     for (let j = 0; j < matrixA.height; j++) {
-      if (matrixA.getCell(i, j) !== matrixB.getCell(i, j)) {
+      if (matrixA.items[i][j] !== matrixB.items[i][j]) {
         return false
       }
     }
@@ -29,7 +29,7 @@ export const isTransposed: MatrixComparer  = (matrixA, matrixB) => {
 
   for (let i = 0; i < matrixA.width; i++) {
     for (let j = 0; j < matrixA.height; j++) {
-      if (matrixA.getCell(i, j) !== matrixB.getCell(i, j)) {
+      if (matrixA.items[i][j] !== matrixB.items[i][j]) {
         return false
       }
     }

@@ -86,7 +86,7 @@ const testCases = [
 ]
 
 
-describe('Analyzer', () => {
+describe('Matrix analyzer', () => {
   testCases.forEach(({ method, items }) => {
     it(method, () => {
       expect(
