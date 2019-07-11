@@ -1,7 +1,8 @@
 <script>
-  import Router, { link } from 'svelte-spa-router'
+  import Router, { link, push } from 'svelte-spa-router'
   import active from 'svelte-spa-router/active'
-  import Home from './routes/Home.svelte'
+  // import Home from './routes/Home.svelte'
+  import Help from './routes/Help.svelte'
   import Details from './routes/Details.svelte'
   import AddMatrix from './routes/AddMatrix.svelte'
   import MultiplyMatrix from './routes/MultiplyMatrix.svelte'
@@ -9,11 +10,12 @@
   import NotFound from './routes/NotFound.svelte'
 
   const routes = {
-    '/': Home,
     '/matrix/details': Details,
     '/matrix/add/matrix': AddMatrix,
     '/matrix/multiply/matrix': MultiplyMatrix,
     '/matrix/multiply/number': MultiplyNumber,
+    '/help': Help,
+    '/': push('/help'),
     '*': NotFound,
   }
 </script>
@@ -94,6 +96,11 @@
         <li class="nav-item" use:active={'/matrix/multiply/matrix'}>
           <a use:link href="/matrix/multiply/matrix">
             Multiply on matrix
+          </a>
+        </li>
+        <li class="nav-item" use:active={'/help'}>
+          <a use:link href="/help">
+            Help
           </a>
         </li>
       </ul>
