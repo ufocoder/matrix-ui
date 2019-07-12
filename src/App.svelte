@@ -60,13 +60,6 @@
   height: 100%;
   background: #fff;
 }
-.accordion-header {
-  color: #455060;
-  font-size: .65rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding: .2rem 0;
-}
 .route {
   padding: 4rem;
 }
