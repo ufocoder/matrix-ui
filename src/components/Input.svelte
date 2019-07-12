@@ -1,5 +1,5 @@
 <script>
-  import { afterUpdate } from 'svelte';
+  import svelte from 'svelte';
 
   export let value = 1;
 
@@ -7,7 +7,7 @@
   let selectionStart
   let selectionEnd
 
-  afterUpdate(() => {
+  svelte.afterUpdate(() => {
     element.setSelectionRange(selectionStart, selectionEnd);
   })
 
